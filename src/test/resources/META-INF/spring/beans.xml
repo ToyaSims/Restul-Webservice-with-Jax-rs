@@ -1,0 +1,24 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+			<props>
+				<prop key="java.naming.factory.initial">org.apache.openejb.client.RemoteInitialContextFactory</prop>
+				<prop key="java.naming.provider.url">ejbd://localhost:4201</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="greeterBean"
+		class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean">
+		<property name="jndiName" value="GreeterImplRemote" />
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="businessInterface" value="org.xh.studies.openejb.Greeter" />
+	</bean>
+
+
+
+</beans>
